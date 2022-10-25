@@ -1,13 +1,23 @@
-from flask import Flask, request, jsonify
-from flask_pymongo import PyMongo
-from bson.objectid import ObjectId
+import os
 import socket
 
-app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://mongo:27017/dev"
-mongo = PyMongo(app)
-db = mongo.db
+from flask import Flask, request, jsonify
+from pymongo import MongoClient
+from bson.objectid import ObjectId
 
+app = Flask(__name__)
+host = os.environ['DB_URL']
+port = 27017
+username = os.environ['MONGO_INITDB_ROOT_USERNAME']
+password = os.environ['MONGO_INITDB_ROOT_PASSWORD']
+db_name = 'dev'
+
+client = MongoClient(host=host,
+                     port=27017,
+                     username=username,
+                     password=password,
+                     authSource='admin')
+db = client[db_name]
 
 @app.route("/")
 def index():

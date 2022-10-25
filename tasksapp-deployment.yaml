@@ -16,7 +16,23 @@ spec:
     spec:
       containers:
         - name: tasksapp
-          image: evalus/tasksapp-python:1.0.0
+          image: evalus/tasksapp-python:1.0.6
           ports:
             - containerPort: 5000
           imagePullPolicy: Always
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: mongo-user
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: mongo-password
+            - name: DB_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: mongo-config
+                  key: mongo-url
