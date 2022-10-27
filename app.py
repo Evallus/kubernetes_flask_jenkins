@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
+
 app = Flask(__name__)
 host = os.environ['DB_URL']
 port = 27017
@@ -18,6 +19,7 @@ client = MongoClient(host=host,
                      password=password,
                      authSource='admin')
 db = client[db_name]
+
 
 @app.route("/")
 def index():
@@ -74,14 +76,6 @@ def delete_task(id):
     return jsonify(
         message=message
     )
-
-
-# @app.route("/tasks/delete", methods=["POST"])
-# def delete_all_tasks():
-#     db.task.remove()
-#     return jsonify(
-#         message="All Tasks deleted!"
-#     )
 
 
 @app.route("/hello")

@@ -1,3 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tasksapp-svc
+spec:
+  selector:
+    app: tasksapp
+  ports:
+    - port: 8080
+      targetPort: 5000
+  type: LoadBalancer
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -5,7 +17,7 @@ metadata:
   labels:
     app: tasksapp
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: tasksapp
@@ -16,7 +28,7 @@ spec:
     spec:
       containers:
         - name: tasksapp
-          image: evalus/tasksapp-python:1.0.6
+          image: evalus/tasksapp-python:1.1.0
           ports:
             - containerPort: 5000
           imagePullPolicy: Always
