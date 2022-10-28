@@ -79,7 +79,7 @@ def delete_task(id):
 
 
 @app.route("/hello")
-def delete_all_tasks():
+def welcome():
     return "<p>Hello world!</p>"
 
 
