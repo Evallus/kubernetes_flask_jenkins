@@ -1,0 +1,7 @@
+label: tasksapp
+replicas: 3
+port: 8080
+containerport: 5000
+image:
+  name: evalus/tasksapp-python
+  tag: "1.1.0"
