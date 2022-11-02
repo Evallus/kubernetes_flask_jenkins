@@ -18,7 +18,7 @@ spec:
         - name: tasksapp
           image: {{ .Values.image.name }}:{{ .Values.image.tag }}
           ports:
-            - containerPort: {{ .Values.containerport }}
+            - containerPort: {{ .Values.containerPort }}
           imagePullPolicy: Always
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
