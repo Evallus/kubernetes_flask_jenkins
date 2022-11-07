@@ -14,7 +14,8 @@ pipeline {
                 script {
                    echo 'Initiating application...'
                 }
-                git 'https://github.com/Evallus/kubernetes_flask_jenkins.git'
+//                 git 'https://github.com/Evallus/kubernetes_flask_jenkins.git'
+                checkout scm
             }
         }
         stage("Build") {
