@@ -9,11 +9,12 @@ pipeline {
         booleanParam(name: 'executeTests', defaultValue: true, description: '')
     }
     stages {
-        stage("Init") {
+        stage('Checkout Source') {
             steps {
                 script {
                    echo 'Initiating application...'
                 }
+                git 'https://github.com/Evallus/kubernetes_flask_jenkins.git'
             }
         }
         stage("Build") {
