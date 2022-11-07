@@ -1,29 +1,41 @@
 pipeline {
-    agent any
     environment {
-        NEW_VERSION = '1.3.0'
+        DOCKER_IMAGE_NAME = "evalus/tasksapp-python"
+        DOCKER_IMAGE = ""
     }
+    agent any
     parameters {
-        choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
         booleanParam(name: 'executeTests', defaultValue: true, description: '')
     }
     stages {
-        stage("init") {
+        stage("Init") {
             steps {
                 script {
-                   echo 'initiating application...'
-                   echo "initiating version ${NEW_VERSION}"
+                   echo 'Initiating application...'
                 }
             }
         }
-        stage("build") {
+        stage("Build") {
             steps {
                 script {
-                   echo 'building application...'
+                   echo 'Building image...'
+                   DOCKER_IMAGE = docker.build DOCKER_IMAGE_NAME
                 }
             }
         }
-        stage("test") {
+        stage("Push") { //IF app.py changed
+            environment {
+                registryCredential = 'dockerhublogin'
+            }
+            steps {
+                script {
+                    echo 'Pushing image...'
+                    docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
+                    dockerImage.push("latest")
+                }
+            }
+        }
+        stage("Test") {
             when {
                 expression {
                     params.executeTests
@@ -31,19 +43,20 @@ pipeline {
             }
             steps {
                 script {
-                   echo 'testing application...'
+                   echo 'Testing application...'
                 }
             }
         }
-        stage("deploy") {
-            when {
-                expression {
-                    BRANCH_NAME == 'main'
-                }
-            }
+        stage("Deploy") { //IF MANIFESTS CHANGED OR IS NOT CURRENTLY RUNNING
+//             when {
+//                 expression {
+//                     BRANCH_NAME == 'main' //AND TESTED AND PASSED_TEST
+//                 }
+//             }
             steps {
                 script {
-                   echo 'deploying application...'
+                   echo 'Deploying application...'
+                   kubernetesDeploy(configs: "tasksapp.yaml", kubeconfigId: "kubernetes")
                 }
             }
         }
