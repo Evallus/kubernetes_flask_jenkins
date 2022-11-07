@@ -1,4 +1,5 @@
 pipeline {
+    options { buildDiscarder(logRotator(numToKeepStr:'5'))}
     environment {
         DOCKER_IMAGE_NAME = "evalus/tasksapp-python"
         DOCKER_IMAGE = ""
