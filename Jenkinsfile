@@ -14,7 +14,6 @@ pipeline {
                 script {
                    echo 'Initiating application...'
                 }
-//                 git 'https://github.com/Evallus/kubernetes_flask_jenkins.git'
                 checkout scm
             }
         }
@@ -22,7 +21,7 @@ pipeline {
             steps {
                 script {
                    echo 'Building image...'
-                   DOCKER_IMAGE = docker.build DOCKER_IMAGE_NAME
+                   DOCKER_IMAGE = docker.build(DOCKER_IMAGE_NAME)
                 }
             }
         }
