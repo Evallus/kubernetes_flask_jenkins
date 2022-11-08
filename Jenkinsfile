@@ -33,7 +33,7 @@ pipeline {
                 script {
                     echo 'Pushing image...'
                     docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
-                        dockerImage.push("latest")
+                        DOCKER_IMAGE.push("latest")
                     }
                 }
             }
