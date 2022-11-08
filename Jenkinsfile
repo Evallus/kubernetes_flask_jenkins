@@ -59,7 +59,7 @@ pipeline {
             steps {
                 script {
                    echo 'Deploying application...'
-                   kubernetesDeploy(configs: "manifests/tasksapp.yaml", kubeconfigId: "kubernetes")
+                   kubernetesDeploy(configs: "manifests/", kubeconfigId: "kubernetes")
                 }
             }
         }
