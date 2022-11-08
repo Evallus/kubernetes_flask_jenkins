@@ -59,8 +59,7 @@ pipeline {
             steps {
                 script {
                     echo 'Deploying application...'
-                    sh "kubectl apply -f manifests"
-//                    kubernetesDeploy(configs: "manifests/", kubeconfigId: "kubernetes")
+                    kubernetesDeploy(configs: "manifests/", kubeconfigId: "kubernetes")
 
                 }
             }
