@@ -46,7 +46,7 @@ pipeline {
             }
             steps {
                 script {
-                   echo 'Testing application...'
+                    echo 'Testing application...'
                 }
             }
         }
@@ -58,8 +58,10 @@ pipeline {
 //             }
             steps {
                 script {
-                   echo 'Deploying application...'
-                   kubernetesDeploy(configs: "manifests/", kubeconfigId: "kubernetes")
+                    echo 'Deploying application...'
+                    sh "kubectl apply -f manifests"
+//                    kubernetesDeploy(configs: "manifests/", kubeconfigId: "kubernetes")
+
                 }
             }
         }
